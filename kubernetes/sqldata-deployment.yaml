@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: sqldata-deploy
+ labels:
+  name: sqldata-deploy
+  app: hypermedia-app
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+    name: sqldata-pod
+    app: hypermedia-app
+ template:
+  metadata:
+    name: sqldata-pod
+    labels:
+      name: sqldata-pod
+      app: hypermedia-app
+  spec:
+    containers:
+      - name: sqldata
+        image: mcr.microsoft.com/mssql/server:latest
+        ports:
+        - containerPort: 1433
+        env:
+        - name: SA_PASSWORD
+          value: "Pass@word"
+        - name: ACCEPT_EULA
+          value: "Y"
+

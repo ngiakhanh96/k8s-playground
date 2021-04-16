@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: hypermedia-app-deploy
+ labels:
+  name: hypermedia-app-deploy
+  app: hypermedia-app
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+    name: hypermedia-app-pod
+    app: hypermedia-app
+ template:
+  metadata:
+    name: hypermedia-app-pod
+    labels:
+      name: hypermedia-app-pod
+      app: hypermedia-app
+  spec:
+    containers:
+      - name: hypermedia-app
+        image: ngiakhanh96/kubernetes_playground
+        ports:
+        - containerPort: 80
+        env:
+        - name: ConnectionStrings__OrderDbContext
+          value: "Data Source=sqldata,1433;Initial Catalog=OrderDb;User ID=sa;Password=Pass@word"
+

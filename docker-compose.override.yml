@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  hypermediaapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=443
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/dev_cert.pfx
+      - "ConnectionStrings__OrderDbContext=Data Source=sqldb,1433;Initial Catalog=OrderDb;User ID=sa;Password=Pass@word"
+    ports:
+      - "5000:80"
+      - "5001:443"
+    depends_on:
+      - sqldb
+    volumes:
+      - ./conf.d/https/:/https/
+
+  sqldb:
+    container_name: sqldb
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldata:/var/opt/mssql

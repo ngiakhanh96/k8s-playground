@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  hypermediaapi:
+    image: ${DOCKER_REGISTRY-}hypermediaapi
+    build:
+      context: .
+      dockerfile: HypermediaAPI/Dockerfile
+
+  sqldb:
+    image: mcr.microsoft.com/mssql/server:latest
+
+volumes:
+  sqldata:
